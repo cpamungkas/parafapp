@@ -13,21 +13,35 @@
                     <!-- <p class="text-center fw-bold mx-3 mb-0">Sign into your account</p> -->
                     <p class="text-center fw-bold mx-3 mb-0"><?= $loginTitle . ' ' . $label; ?></p>
                 </div>
-                <form id="login-form" action="<?= base_url(); ?>home" method="post">
+                <form id="register-form" action="<?= base_url(); ?>home/register" method="post">
+                    <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <!-- <label class="form-label" for="email">Email address</label> -->
-                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Email address" tabindex="1" required autofocus />
-                        <!-- <div class="invalid-feedback">
-                                    < ?= session('errors.login') ?>
-                                </div> -->
+                        <input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="Email Address" value="<?= set_value('email'); ?>" />
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <small class="text-danger"><?= form_error('email'); ?></small>
+                        <div class="invalid-feedback"> </div>
                     </div>
+                    <!-- Username input -->
+                    <!-- <div class="form-outline mb-4"> -->
+                    <!-- <label class=" form-label" for="username">Username</label> -->
+                    <!-- <input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="Username" value="< ?= set_value('username') ?>" /> -->
+                    <!-- </div> -->
+
+                    <!-- Fullname input -->
+                    <div class="form-outline mb-4">
+                        <!-- <label class=" form-label" for="username">Username</label> -->
+                        <input type="text" id="fullname" name="fullname" class="form-control form-control-lg" placeholder="Fullname" value="<?= set_value('fullname') ?>" />
+                        <small class="text-danger"><?= form_error('fullname'); ?></small>
+                    </div>
+
                     <!-- Password input -->
                     <div class="form-outline mb-3">
-                        <!-- <label class="form-label" for="password">Password</label> -->
-                        <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password" tabindex="2" required>
-                        <!-- <div class="invalid-feedback">
-                                < ?= session('errors.password') ?>
-                            </div> -->
+                        <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password" autocomplete="off" />
+                        <small class="text-danger"><?= form_error('password'); ?></small>
+                    </div>
+                    <div class="form-outline mb-3">
+                        <input type="password" id="pass_confirm" name="pass_confirm" class="form-control form-control-lg" placeholder="Repeat Password" autocomplete="off" />
+                        <small class="text-danger"><?= form_error('pass_confirm'); ?></small>
                     </div>
 
                     <!-- < ?php if ($config->allowRemembering) : ?> -->
@@ -41,21 +55,13 @@
                                     Remember me
                                 </label>-->
                         </div>
-                        <a href="#!" class="text-body">Forgot password?</a>
+                        <!-- <a href="#!" class="text-body">Forgot password?</a> -->
                     </div>
                     <!-- < ?php endif; ?> -->
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="<?= base_url(); ?>home/register" class="link-danger">Register</a></p>
-
-                        <!-- <a href="#!" class="text-body">Forgot password?</a>-->
-                        <!-- < ?php if ($config->activeResetter) : ?> -->
-                        <!-- <p><a href="#">forgot Password</a></p> -->
-                        <!-- < ?php endif; ?> -->
-
-                        <!-- < ?php if ($config->allowRegistration) : ?> -->
-                        <!-- < ?php endif; ?> -->
+                        <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Already registered? <a href="<?= base_url('home') ?>" class="link-danger"> Sign In</a></p>
                     </div>
                 </form>
             </div>
