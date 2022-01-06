@@ -209,57 +209,57 @@ class Home extends CI_Controller
             $this->load->view('auth/register');
             $this->load->view('templates/auth_footer');
         } else {
-            // $nameuser = htmlspecialchars($this->input->post('name', true));
-            // $encrypted_name = md5($nameuser);
-            // $timeregister = time();
-            // $activationcode = md5(uniqid(rand()));
-            // $expirestime = strtotime('+4 days',  $timeregister);
+            $nameuser = htmlspecialchars($this->input->post('name', true));
+            $encrypted_name = md5($nameuser);
+            $timeregister = time();
+            $activationcode = md5(uniqid(rand()));
+            $expirestime = strtotime('+4 days',  $timeregister);
 
-            // $data = [
-            //     'name' => htmlspecialchars($this->input->post('name', true)),
-            //     'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-            //     'email' => htmlspecialchars($this->input->post('email', true)),
-            //     'image' => 'default.jpg',
-            //     'role_id' => 5,
-            //     'is_active' => 0,
-            //     'date_created' => time(),
-            //     'date_updated' => time(),
-            //     'expired_time' => $expirestime,
-            //     'activationcode' => $activationcode,
-            //     'status_deleted' => 0
-            // ];
+            $data = [
+                'name' => htmlspecialchars($this->input->post('name', true)),
+                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'email' => htmlspecialchars($this->input->post('email', true)),
+                'image' => 'default.jpg',
+                'role_id' => 5,
+                'is_active' => 0,
+                'date_created' => time(),
+                'date_updated' => time(),
+                'expired_time' => $expirestime,
+                'activationcode' => $activationcode,
+                'status_deleted' => 0
+            ];
 
-            // $this->db->insert('tb_user', $data);
+            $this->db->insert('tb_user', $data);
 
-            // //send mail for activate
-            // $this->load->config('email');
-            // $this->load->library('email');
+            //send mail for activate
+            $this->load->config('email');
+            $this->load->library('email');
 
-            // $from = $this->config->item('smtp_user');
-            // $to = htmlspecialchars($this->input->post('email', true));
-            // $subject = 'Verify Email Address';
-            // $message = 'Hello, ' . $nameuser . '!<br><br><br>
-            // Please click the button below to verify your email address.<br>
-            // <a href ="' . base_url() . 'auth/verification/' . $activationcode . '/' . $expirestime . '/' . $encrypted_name . '" class="btn btn-success">Verify Email</a><br>
-            // If you did not create an account, no further action is required.<br>
-            // Regards,<br>
-            // Team<br><br>
+            $from = $this->config->item('smtp_user');
+            $to = htmlspecialchars($this->input->post('email', true));
+            $subject = 'Verify Email Address';
+            $message = 'Hello, ' . $nameuser . '!<br><br><br>
+            Please click the button below to verify your email address.<br>
+            <a href ="' . base_url() . 'auth/verification/' . $activationcode . '/' . $expirestime . '/' . $encrypted_name . '" class="btn btn-success">Verify Email</a><br>
+            If you did not create an account, no further action is required.<br>
+            Regards,<br>
+            Team<br><br>
 
-            // If you\'re having trouble clicking the "Verify Email Address" button copy and paste the URL below into your web browser: <br><br> <a href="' .
-            //     base_url() . 'auth/verification/' . $activationcode . '/' . $expirestime . '/' . $encrypted_name . '" class="btn btn-success">' . base_url() . 'auth/verification/' . $activationcode . '/' . $expirestime . '/' . $encrypted_name . '</a><br>';
+            If you\'re having trouble clicking the "Verify Email Address" button copy and paste the URL below into your web browser: <br><br> <a href="' .
+                base_url() . 'auth/verification/' . $activationcode . '/' . $expirestime . '/' . $encrypted_name . '" class="btn btn-success">' . base_url() . 'auth/verification/' . $activationcode . '/' . $expirestime . '/' . $encrypted_name . '</a><br>';
 
 
-            // $this->email->set_newline("\r\n");
-            // $this->email->from($from);
-            // $this->email->to($to);
-            // $this->email->subject($subject);
-            // $this->email->message($message);
+            $this->email->set_newline("\r\n");
+            $this->email->from($from);
+            $this->email->to($to);
+            $this->email->subject($subject);
+            $this->email->message($message);
 
-            // if ($this->email->send()) {
-            //     echo 'Your Email has successfully been sent.';
-            // } else {
-            //     show_error($this->email->print_debugger());
-            // }
+            if ($this->email->send()) {
+                echo 'Your Email has successfully been sent.';
+            } else {
+                show_error($this->email->print_debugger());
+            }
 
             $this->session->set_flashdata('registersuccess', 'Congratulation! your account has been created. Please check your mail & Login');
             redirect('Home');
