@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="logo-pro">
-                        <a href="index.html"><img class="main-logo" src="<?= base_url(); ?>assets/img/logo/logo.png" alt="" /></a>
+                        <a href="index.html"><img class="main-logo" src="<?= base_url(); ?>assets/img/logo/logogramediablue.png" alt="" /></a>
                     </div>
                 </div>
             </div>
@@ -596,30 +596,30 @@
                                                 <li><a title="Dashboard v.1" href="#"><span class="mini-sub-pro">Manage Users</span></a></li>
                                                 <li><a title="Dashboard v.2" href="#"><span class="mini-sub-pro">Manage Menu</span></a></li>
                                                 <li><a title="Dashboard v.3" href="#"><span class="mini-sub-pro">Manage Role</span></a></li>
-                                                <li><a title="Analytics" href="#"><span class="mini-sub-pro">Analytics</span></a></li>
+                                                <!-- <li><a title="Analytics" href="#"><span class="mini-sub-pro">Analytics</span></a></li> -->
                                                 <li><a title="Widgets" href="#"><span class="mini-sub-pro">Config</span></a></li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#demoevent" href="#">Signature <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
-                                            <ul id="demoevent" class="collapse dropdown-header-top">
-                                                <li><a href="all-professors.html">My Signature</a>
+                                        <li><a data-toggle="collapse" data-target="#eventsignature" href="#">Signature <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="eventsignature" class="collapse dropdown-header-top">
+                                                <li><a href="<?= base_url(); ?>Createsignin/mysignin">My Signature</a>
                                                 </li>
-                                                <li><a href="add-professor.html">Create Signature</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a data-toggle="collapse" data-target="#demopro" href="#">Signin Docs <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
-                                            <ul id="demopro" class="collapse dropdown-header-top">
-                                                <li><a href="all-students.html">Only Me</a>
-                                                </li>
-                                                <li><a href="add-student.html">Me & Others</a>
-                                                </li>
-                                                <li><a href="edit-student.html">Only Others</a>
+                                                <li><a href="<?= base_url(); ?>Createsignin">Create Signature</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#democrou" href="#">Status Docs <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
-                                            <ul id="democrou" class="collapse dropdown-header-top">
+                                        <li><a data-toggle="collapse" data-target="#eventsigndoc" href="#">Signin Docs <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="eventsigndoc" class="collapse dropdown-header-top">
+                                                <li><a href="<?= base_url(); ?>Onlyme">Only Me</a>
+                                                </li>
+                                                <li><a href="#meandothers">Me & Others</a>
+                                                </li>
+                                                <li><a href="#onlyothers">Only Others</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#eventstatusdoc" href="#">Status Docs <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="eventstatusdoc" class="collapse dropdown-header-top">
                                                 <li><a href="all-courses.html">Complete</a>
                                                 </li>
                                                 <li><a href="add-course.html">Awaiting</a>

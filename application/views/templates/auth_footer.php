@@ -11,9 +11,6 @@
     <!-- Effect Tilt Javascripts -->
     <script type="text/javascript" src="<?= base_url(); ?>vendor/tilt/vanilla-tilt.min.js"></script>
 
-
-
-
     <!-- Custom Sweetalert scripts for Alert-->
     <script type="text/javascript">
         $(document).ready(function() {

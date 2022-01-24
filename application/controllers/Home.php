@@ -7,11 +7,24 @@ class Home extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('security');
-        $this->load->library('form_validation');
+        $this->load->library('form_validation');        
     }
 
     public function index()
     {
+        $data['user'] = $this->db->get_where('tb_user', ['email' => $this->session->userdata('email')])->row_array();
+        if ($this->session->userdata('role_id') == 1) {
+            // $this->_logActivity($data['user']['user_id'], 'Home', 'Index home');
+            logActivity($data['user']['user_id'], 'Home', 'Index home admin');
+            redirect('Admin');
+        } elseif ($this->session->userdata('role_id') == 3) {
+            logActivity($data['user']['user_id'], 'Home', 'Index home user');
+            redirect('User');
+        } elseif ($this->session->userdata('role_id') == 5) {
+            logActivity($data['user']['user_id'], 'Home', 'Index home guest');
+            redirect('Guest');
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
@@ -111,6 +124,7 @@ class Home extends CI_Controller
         $this->email->message($message);
 
         if ($this->email->send()) {
+
             echo 'Your Email has successfully been sent.';
         } else {
             show_error($this->email->print_debugger());
@@ -150,46 +164,56 @@ class Home extends CI_Controller
                     $this->session->set_userdata($data);
                     //cek role id
                     if ($user['role_id'] == 1) {
+                        logActivity($user['user_id'], 'Login', 'Login Success');
                         $this->session->set_flashdata('loginsuccessmsg', 'Hello, ' . $user['name']);
-                        redirect('admin'); //untuk akses administrator
+                        redirect('Admin'); //untuk akses administrator
                     } elseif ($user['role_id'] == 2 or $user['role_id'] == 3) {
+                        logActivity($user['user_id'], 'Login', 'Login Success');
                         $this->session->set_flashdata('loginsuccessmsg', 'Hello, ' . $user['name']);
                         redirect('User'); //untuk akses user internal
-                    } elseif ($user['role_id'] == 4) {
+                    } elseif ($user['role_id'] == 5) {
+                        logActivity($user['user_id'], 'Login', 'Login Success');
                         $this->session->set_flashdata('loginsuccessmsg', 'Hello, ' . $user['name']);
-                        redirect('Member'); //untuk akses user external yang registrasi
+                        redirect('Guest'); //untuk akses user external yang registrasi
                     } else {
-                        $this->session->set_flashdata('loginsuccessmsg', 'Hello, guest');
-                        redirect('Guest'); //untuk akses tamu tanpa registrasi
+                        $this->session->set_flashdata('loginsuccessmsg', 'Hello, good people');
+                        redirect('Other'); //untuk akses tamu tanpa registrasi
                     }
                 } else {
+                    logActivity($user['user_id'], 'Login', 'Error login. Email or password incorrect.');
                     $this->session->set_flashdata('errorlogin', 'Email or password incorrect please try again!');
                     redirect('Home');
                 }
             } else {
+                logActivity($user['user_id'], 'Login', 'Error login. This email has not been activated.');
                 $this->session->set_flashdata('errorlogin', 'This email has not been activated!');
                 redirect('Home');
             }
         } else {
+            logActivity($user['user_id'], 'Login', 'Error login. Email is not registered.');
             $this->session->set_flashdata('errorlogin', 'Email is not registered!');
             redirect('Home');
         }
     }
 
+    // private function _logActivity($userId, $Activity, $descActivity)
+    // {
+    //     $user = $this->db->get_where('tb_user', ['user_id' => $userId])->row_array();
+
+    //     $datalogActivity = [
+    //         'time_log' => time(),
+    //         'user_id' => $userId, /*email pembuat dokumen*/
+    //         'user_name' => $user['name'],
+    //         'activity' => $Activity,
+    //         'desc_log' => $descActivity,
+    //         'date_created' => time(),
+    //         'date_updated' => time()
+    //     ];
+    //     $this->db->insert('tb_log_activity', $datalogActivity);
+    // }
+
     public function registration()
     {
-        /*         if ($this->session->userdata('email')) {
-            redirect('dashboard');
-        } */
-        /*         if ($this->session->userdata('role_id') == 1) {
-            redirect('admin');
-        } elseif ($this->session->userdata('role_id') == 2 or $this->session->userdata('role_id') == 3) {
-            redirect('users');
-        } elseif ($this->session->userdata('role_id') == 4) {
-            redirect('members');
-        } else {
-            redirect('guest');
-        } */
         $this->form_validation->set_rules('fullname', 'Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[tb_user.email]', [
             'is_unique' => 'This email has already registered!'
@@ -268,6 +292,9 @@ class Home extends CI_Controller
 
     public function logout()
     {
+        $user = $this->db->get_where('tb_user', ['email' => $this->session->userdata('email')])->row_array();
+        logActivity($user['user_id'], 'Logout', 'You have been logged out');
+
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
 
@@ -281,9 +308,8 @@ class Home extends CI_Controller
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-           403! Access Forbidden. Sorry, your not allowed to enter here! or Please contact your admin to activation.</div>');
-        redirect('auth');
+        $this->session->set_flashdata('errorlogin', '403! Access Forbidden. Sorry, your not allowed to enter here! or Please contact your admin to activation');
+        redirect('Home');
     }
 
     public function forgot()
